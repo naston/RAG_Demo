@@ -19,8 +19,8 @@ def index_paper_text():
     #    texts=texts
     #)
 
-    #documents = pdf_direct()
-    documents = []
+    documents = pdf_direct()
+    #documents = []
     print('received documents',len(documents))
     # initialize the vector store
     client = qdrant_client.QdrantClient(
@@ -66,7 +66,7 @@ def index_paper_text():
 
     query_engine = index.as_query_engine()
 
-    query="""Describe Mixtral of Experts? Information about this can be found in the document OCR_MixOE."""
+    query="""Describe Mixtral of Experts?"""#Information about this can be found in the document OCR_MixOE."""
 
     response = query_engine.query(query)
     print(response)
