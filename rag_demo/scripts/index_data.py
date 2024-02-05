@@ -5,6 +5,7 @@ import qdrant_client
 from llama_index import (
     VectorStoreIndex,
     ServiceContext,
+    StringIterableReader,
     download_loader,
 )
 from llama_index.llms import Ollama
@@ -12,7 +13,11 @@ from llama_index.storage.storage_context import StorageContext
 from llama_index.vector_stores.qdrant import QdrantVectorStore
 
 def index_paper_text():
-    text = extract_pdf()
+    texts = extract_pdf()
+
+    documents = StringIterableReader().load_data(
+        texts=texts
+    )
 
     # initialize the vector store
     client = qdrant_client.QdrantClient(
@@ -26,7 +31,7 @@ def index_paper_text():
     service_context = ServiceContext.from_defaults(llm=llm,embed_model="local")
 
     # create the index; this will embed the documents and store them in the vector store
-    index = VectorStoreIndex.from_documents(text,service_context=service_context,storage_context=storage_context)
+    index = VectorStoreIndex.from_documents(documents,service_context=service_context,storage_context=storage_context)
 
     query_engine = index.as_query_engine()
 
