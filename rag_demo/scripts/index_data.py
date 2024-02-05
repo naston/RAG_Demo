@@ -6,6 +6,7 @@ from llama_index import (
     VectorStoreIndex,
     ServiceContext,
     download_loader,
+    set_global_service_context,
 ) #StringIterableReader,
 from llama_index.llms import Ollama
 from llama_index.storage.storage_context import StorageContext
@@ -32,8 +33,23 @@ def index_paper_text():
     # initialize the LLM
     llm = Ollama(model="tinyllama")
     service_context = ServiceContext.from_defaults(llm=llm,embed_model="local")
+    set_global_service_context(service_context)
 
     print('init LM')
+
+    """
+    # Node represents a “chunk” of a source Document
+    nodes = (
+        service_context
+        .node_parser
+        .get_nodes_from_documents(documents)
+    )
+
+    # offers core abstractions around storage of Nodes, 
+    # indices, and vectors
+    storage_context = StorageContext.from_defaults()
+    storage_context.docstore.add_documents(nodes)
+    """
 
     # create the index; this will embed the documents and store them in the vector store
     index = VectorStoreIndex.from_documents(
