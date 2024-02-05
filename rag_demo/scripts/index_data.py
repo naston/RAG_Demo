@@ -36,7 +36,11 @@ def index_paper_text():
     print('init LM')
 
     # create the index; this will embed the documents and store them in the vector store
-    index = VectorStoreIndex.from_documents(documents,service_context=service_context,storage_context=storage_context)
+    index = VectorStoreIndex.from_documents(
+        documents,
+        llm=llm,
+        storage_context=storage_context
+    )
 
     print('Index made')
 
