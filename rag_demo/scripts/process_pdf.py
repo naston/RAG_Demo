@@ -39,6 +39,7 @@ def extract_pdf():
     extract OCRed PDF using PyMuPDF and save into a pandas dataframe
     '''
     ocr_file_list = [f for f in os.listdir(path=PROCESSED_DATA) if f.startswith('OCR_') ]
+    #ocr_file_list = ['OCR_'+f for f in file_list]
 
     # PDF extraction
     # informations we want to extract
@@ -51,7 +52,8 @@ def extract_pdf():
             page = doc.load_page(page_num)
             text.append(page.get_text('text'))
     print(len(text)) 
-    #generate_output(extraction_pdfs)
+    
+    return text
 
 def generate_output(pdf_dict):
     print('gen output...')
