@@ -66,7 +66,7 @@ def index_paper_text():
 
     query_engine = index.as_query_engine()
 
-    query="""Describe Mixtral of Experts?"""
+    query="""Describe Mixtral of Experts? Information about this can be found in the document OCR_MixOE."""
 
     response = query_engine.query(query)
     print(response)
