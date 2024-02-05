@@ -19,7 +19,8 @@ def index_paper_text():
     #)
 
     documents = pdf_direct()
-
+    print(documents)
+    return
     # initialize the vector store
     client = qdrant_client.QdrantClient(
         path="./qdrant_data"
