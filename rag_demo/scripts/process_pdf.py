@@ -8,14 +8,14 @@ from pathlib import Path
 from llama_index import download_loader
 
 def pdf_direct():
-    PROCESSED_DATA = './data/02_processed'
+    PROCESSED_DATA = './data/02_processed/'
     file_list = os.listdir(PROCESSED_DATA)
     PDFReader = download_loader("PDFReader")
 
     loader = PDFReader()
     documents = []
     for file in file_list[:3]:
-        documents.append(loader.load_data(file=Path(PROCESSED_DATA+file)))
+        documents.extend(loader.load_data(file=Path(PROCESSED_DATA+file)))
 
     return documents
 
