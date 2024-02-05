@@ -3,5 +3,7 @@ from llama_index.llms import Ollama
 
 llm = Ollama(model="tinyllama")
 
+print('generate response...')
+
 response = llm.complete("Who is Lionel Messi?")
 print(response)
