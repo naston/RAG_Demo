@@ -66,7 +66,7 @@ def index_paper_text():
 
     query_engine = index.as_query_engine()
 
-    query="""What does the acronym S4 stand for?"""
+    query="""Describe Mixtral of Experts?"""
 
     response = query_engine.query(query)
     print(response)
