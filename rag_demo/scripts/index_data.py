@@ -1,23 +1,24 @@
 from pathlib import Path
-from .process_pdf import extract_pdf
+from .process_pdf import extract_pdf, pdf_direct
 
 import qdrant_client
 from llama_index import (
     VectorStoreIndex,
     ServiceContext,
-    StringIterableReader,
     download_loader,
-)
+) #StringIterableReader,
 from llama_index.llms import Ollama
 from llama_index.storage.storage_context import StorageContext
 from llama_index.vector_stores.qdrant import QdrantVectorStore
 
 def index_paper_text():
-    texts = extract_pdf()
+    #texts = extract_pdf()
 
-    documents = StringIterableReader().load_data(
-        texts=texts
-    )
+    #documents = StringIterableReader().load_data(
+    #    texts=texts
+    #)
+
+    documents = pdf_direct()
 
     # initialize the vector store
     client = qdrant_client.QdrantClient(
