@@ -1,5 +1,5 @@
 from pathlib import Path
-from process_pdf import extract_pdf
+from .process_pdf import extract_pdf
 
 import qdrant_client
 from llama_index import (
