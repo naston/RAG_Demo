@@ -19,7 +19,8 @@ def index_paper_text():
     #    texts=texts
     #)
 
-    documents = pdf_direct()
+    #documents = pdf_direct()
+    documents = []
     print('received documents',len(documents))
     # initialize the vector store
     client = qdrant_client.QdrantClient(
@@ -58,7 +59,7 @@ def index_paper_text():
     index = VectorStoreIndex.from_documents(
         documents,
         service_context=service_context,
-        #storage_context=storage_context
+        storage_context=storage_context
     )
 
     print('Index made')
