@@ -32,8 +32,11 @@ def index_paper_text():
 
     # initialize the LLM
     llm = Ollama(model="tinyllama")
-    service_context = ServiceContext.from_defaults(llm=llm,embed_model="local")
-    set_global_service_context(service_context)
+    service_context = ServiceContext.from_defaults(
+        llm=llm,
+        embed_model="local"
+    )
+    #set_global_service_context(service_context)
 
     print('init LM')
 
@@ -54,8 +57,8 @@ def index_paper_text():
     # create the index; this will embed the documents and store them in the vector store
     index = VectorStoreIndex.from_documents(
         documents,
-        llm=llm,
-        storage_context=storage_context
+        service_context=service_context,
+        #storage_context=storage_context
     )
 
     print('Index made')
