@@ -7,12 +7,14 @@ import os
 from pathlib import Path
 from llama_index import download_loader
 
-def pdf_direct():
-    PROCESSED_DATA = './data/02_processed/'
+def pdf_direct(file):
+    PROCESSED_DATA = './data/02_processed/OCR_S4'
     PDFReader = download_loader("PDFReader")
 
     loader = PDFReader()
     documents = loader.load_data(file=Path(PROCESSED_DATA))
+
+    return documents
 
 def extract_pdf():
     RAW_DATA = './data/01_raw/'
