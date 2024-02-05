@@ -7,7 +7,7 @@ import os
 from pathlib import Path
 from llama_index import download_loader
 
-def pdf_direct(file):
+def pdf_direct():
     PROCESSED_DATA = './data/02_processed/OCR_S4'
     PDFReader = download_loader("PDFReader")
 
