@@ -19,8 +19,7 @@ def index_paper_text():
     #)
 
     documents = pdf_direct()
-    print(documents)
-    return
+    print('received documents')
     # initialize the vector store
     client = qdrant_client.QdrantClient(
         path="./qdrant_data"
@@ -28,12 +27,18 @@ def index_paper_text():
     vector_store = QdrantVectorStore(client=client, collection_name="papers")
     storage_context = StorageContext.from_defaults(vector_store=vector_store)
 
+    print('init client')
+
     # initialize the LLM
     llm = Ollama(model="tinyllama")
     service_context = ServiceContext.from_defaults(llm=llm,embed_model="local")
 
+    print('init LM')
+
     # create the index; this will embed the documents and store them in the vector store
     index = VectorStoreIndex.from_documents(documents,service_context=service_context,storage_context=storage_context)
+
+    print('Index made')
 
     query_engine = index.as_query_engine()
 
