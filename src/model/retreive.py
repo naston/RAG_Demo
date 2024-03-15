@@ -7,19 +7,21 @@ class RetrieverModel(object):
         self.embed = embed
         self.index = index
 
-    def __call__(self, query):
+    def __call__(self, query, k=10):
         query_vect = self.embed(query)
-        D, I = self.index.search_vectors(query_vect)
+        D, I = self.index.search_vectors(query_vect, k)
         
         context = None
         return context
     
 class _RetrieverModel(dspy.Retrieve):
-    def __init__(self, document_chunks, embed, index):
+    def __init__(self, embed, index, doc_map):
         self.embed = embed
         self.index = index
+        self.doc_map = doc_map
 
-        self.document_chunks = document_chunks
+    def get_document(self, doc_id):
+        pass
 
     def forward(self, query, k=3):
         """Search the faiss index for k or self.k top passages for query.
@@ -35,11 +37,13 @@ class _RetrieverModel(dspy.Retrieve):
 
         passage_scores = {}
         for i in range(len(indices[0])):
-            doc_id = indices[i]
-            doc_dist = distances[i]
-            if doc_id in passage_scores:
-                    passage_scores[doc_id].append(doc_dist)
-            else:
-                passage_scores[doc_id] = [doc_dist]
-        sorted_passages = sorted(passage_scores.items(), key=lambda x: (1 - len(x[1]), sum(x[1])))[:k]
-        return [ dotdict({"long_text": self.document_chunks[passage_index], "index": passage_index}) for passage_index, _ in sorted_passages ] #This is where I will need to spend some more time tbh
+            doc_id = indices[0][i]
+            doc_dist = distances[0][i]
+            passage_scores[doc_id] = doc_dist
+            
+        sorted_passages = sorted(passage_scores.items(), key=lambda x: x[1])[:k]
+        return [ dotdict({"long_text": self.get_document(passage_index), "index": passage_index}) for passage_index, _ in sorted_passages ]
+    
+
+if __name__=='__main__':
+    RM = RetrieverModel(None,None)

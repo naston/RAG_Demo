@@ -1,5 +1,5 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM
-import dspy
+from dsp.modules.lm import LM
 
 
 class LanguageModel(object):
@@ -15,7 +15,7 @@ class LanguageModel(object):
         return self.tokenizer.decode(outputs[0])
     
 
-class _LanguageModel(dspy.LM):
+class _LanguageModel(LM):
     def __init__(self, model_name, access_token=None) -> None:
         super().__init__()
         self.tokenizer = AutoTokenizer.from_pretrained(model_name, token=access_token)
