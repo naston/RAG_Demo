@@ -16,6 +16,10 @@ class VectorIndex(object):
         self.index.nprobe = nprobe
 
 
+    def create_index_exact(self, vector_dim:int):
+        self.index = faiss.IndexFlatL2(vector_dim)
+
+
     def is_trained(self):
         return self.index.is_trained()
 
