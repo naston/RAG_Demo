@@ -3,7 +3,7 @@ import dspy
 from dsp.utils import dotdict
 
 class RetrieverModel(object):
-    def __init__(self, embed, index) -> None:
+    def __init__(self, embed, index, doc_map) -> None:
         self.embed = embed
         self.index = index
 
