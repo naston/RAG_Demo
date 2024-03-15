@@ -8,9 +8,9 @@ class LanguageModel(object):
         self.model = AutoModelForCausalLM.from_pretrained(model_name, token=access_token)
 
     
-    def forward(self, text:str):
+    def __call__(self, text:str):
         tokens = self.tokenizer(text, return_tensors="pt")
-        outputs = self.model.generate(**tokens)
+        outputs = self.model.generate(**tokens,max_new_tokens=256)
         return self.tokenizer.decode(outputs[0])
 
 

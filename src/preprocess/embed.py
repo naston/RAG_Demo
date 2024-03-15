@@ -13,7 +13,7 @@ class EmbedModel(object):
         super().__init__()
         self.model = INSTRUCTOR(model_name)
 
-    def forward(self, text:str):
+    def __call__(self, text:str):
         instruction = "Represent the following text:"
         return self.model.encode([[instruction,text]])
 
