@@ -27,29 +27,37 @@ def chunk_pdf(filename:str):
             else:
                 running_text+='\n'+text
     chunks.append(running_text)
+    doc.close()
     
     return chunks
 
 
-def embed_chunk(text:str):
-    raise NotImplementedError
+def dummy_embed_chunk(text:str):
+    # This is just a dummy embedding for now
+    return np.array([0,0,0,0])
 
 
-def parse_document(path:str):
+def parse_document(path:str, vector_dir:str):
     chunks = chunk_pdf(path)
-    with open('test.npy', 'wb') as f:
+    with open(vector_dir+'vector_store.npy', 'wb') as f:
         for c in chunks:
-            embed = embed_chunk(c)
+            embed = dummy_embed_chunk(c)
             np.save(f, embed)
+    f.close()
 
 
-def parse_folder(path:str):
+def parse_folder(path:str, parsed_dir:str, vector_dir:str):
     if path[-1]!='/': path.append('/')
+    if parsed_dir[-1]!='/': parsed_dir.append('/')
+    if vector_dir[-1]!='/': vector_dir.append('/')
 
     for file in os.listdir(path):
-        parse_document(path+file)
+        print('Parsing File:',file)
+        parse_document(path+file,vector_dir)
+    os.replace(path+file,parsed_dir+file)
+
 
 
 if __name__=='__main__':
-    parse_folder('./data/01_raw/')
-    _ = chunk_pdf(filename='./data/01_raw/0shotTTS.pdf')
+    #parse_folder('./data/01_raw/','./data/02_processed/','./data/03_vectors/')
+    parse_folder('./data/00_test/','./data/02_processed/','./data/03_vectors/')
