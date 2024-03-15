@@ -3,6 +3,7 @@ from preprocess.search import VectorIndex
 from model.instruct import LanguageModel
 from model.retreive import RetreiverModel
 from model.RAG import RAG
+import dspy
 
 
 def main():
@@ -11,7 +12,7 @@ def main():
     
     RM = RetreiverModel(EM, index)
     LM = LanguageModel()
-
+    #dspy.settings.configure(lm=LM, rm=RM)
     rag = RAG(LM, RM)
     pass
 

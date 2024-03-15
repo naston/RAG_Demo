@@ -1,4 +1,5 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM
+import dspy
 
 
 class LanguageModel(object):
@@ -12,6 +13,46 @@ class LanguageModel(object):
         tokens = self.tokenizer(text, return_tensors="pt")
         outputs = self.model.generate(**tokens,max_new_tokens=256)
         return self.tokenizer.decode(outputs[0])
+    
+
+class _LanguageModel(dspy.LM):
+    def __init__(self, model_name, access_token=None) -> None:
+        super().__init__()
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name, token=access_token)
+        self.model = AutoModelForCausalLM.from_pretrained(model_name, token=access_token)
+
+    def basic_request(self, prompt, **kwargs):
+        raw_kwargs = kwargs
+        kwargs = {**self.kwargs, **kwargs}
+        response = self._generate(prompt, **kwargs)
+
+        history = {
+            "prompt": prompt,
+            "response": response,
+            "kwargs": kwargs,
+            "raw_kwargs": raw_kwargs,
+        }
+        self.history.append(history)
+
+        return response
+
+    def _generate(self, prompt):
+        inputs = self.tokenizer(prompt, return_tensors="pt").to(self.device)
+        outputs = self.model.generate(**inputs,max_new_tokens=256)
+        
+        input_length = inputs.input_ids.shape[1]
+        outputs = outputs[:, input_length:]
+
+        completions = [{"text": c} for c in self.tokenizer.batch_decode(outputs, skip_special_tokens=True)]
+        response = {
+            "prompt": prompt,
+            "choices": completions,
+        }
+        return response
+    
+    def __call__(self, prompt:str):
+        response = self.request(prompt)
+        return [c["text"] for c in response["choices"]]
 
 
 def chat(chat_model):
