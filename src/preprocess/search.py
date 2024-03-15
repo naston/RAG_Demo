@@ -1,5 +1,5 @@
 import numpy as np
-import faiss  
+import faiss
 
 
 class VectorIndex(object):
@@ -48,15 +48,16 @@ class VectorIndex(object):
 
 
 if __name__=='__main__':
-    index = VectorIndex()
-    index.create_index(728)
+    vector_store = np.random.rand(10_000, 768)
 
-    vector_store = np.load('./path/to/vectors')
+    index = VectorIndex()
+    index.create_index(vector_store.shape[1])
 
     index.train_index(vector_store)
     index.add_vectors(vector_store)
 
-    query = 'non-sense query for now'
-    query_embed = None
+    query = np.random.rand(1,768)
 
-    D, I = index.search_vectors(query_embed)
+    D, I = index.search_vectors(query)
+    print(D[0,0])
+    print(I)
