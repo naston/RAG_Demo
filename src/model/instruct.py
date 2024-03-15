@@ -1,17 +1,23 @@
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from dsp.modules.lm import LM
+import torch
 
 
 class LanguageModel(object):
     def __init__(self, model_name, access_token=None) -> None:
         super().__init__()
+        self.device = "cuda:0" if torch.cuda.is_available() else "cpu"
         self.tokenizer = AutoTokenizer.from_pretrained(model_name, token=access_token)
-        self.model = AutoModelForCausalLM.from_pretrained(model_name, token=access_token)
+        self.model = AutoModelForCausalLM.from_pretrained(model_name, token=access_token).to(self.device)
 
     
     def __call__(self, text:str):
-        tokens = self.tokenizer(text, return_tensors="pt")
+        tokens = self.tokenizer(text, return_tensors="pt").to(self.device)
         outputs = self.model.generate(**tokens,max_new_tokens=256)
+
+        input_length = tokens.input_ids.shape[1]
+        outputs = outputs[:, input_length:-5]
+
         return self.tokenizer.decode(outputs[0])
     
 
