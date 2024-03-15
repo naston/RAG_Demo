@@ -2,10 +2,10 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 
 
 class LanguageModel(object):
-    def __init__(self, model_name) -> None:
+    def __init__(self, model_name, access_token=None) -> None:
         super().__init__()
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-        self.model = AutoModelForCausalLM.from_pretrained(model_name)
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name, token=access_token)
+        self.model = AutoModelForCausalLM.from_pretrained(model_name, token=access_token)
 
     
     def forward(self, text:str):
@@ -23,8 +23,12 @@ def chat(chat_model):
 
 
 if __name__=='__main__':
-    LM = LanguageModel("google/gemma-2b-it")
+    f = open("./access_token.txt", "r")
+    access_token = f.read()
+    f.close()
 
-    input_text = "Write me a poem about Machine Learning."
+    LM = LanguageModel("google/gemma-2b-it",access_token=access_token)
+
+    input_text = "What team does Lionel Messi play for?"
     response = LM(input_text)
     print(response)
