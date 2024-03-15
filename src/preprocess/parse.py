@@ -47,7 +47,13 @@ def parse_document(path:str, vector_dir:str):
             embed = dummy_embed_chunk(c)
             np.save(f, embed)
 
-            chunk_ids.append(uuid.uuid4().hex)
+            chunk_id = uuid.uuid4().hex
+            chunk_ids.append(chunk_id)
+            
+            # save chunk text
+            with open(f'./data/04_text/{chunk_id}.txt','w') as txt_file:
+                txt_file.write(c)
+            txt_file.close()
     f.close()
     return chunk_ids
 
@@ -59,8 +65,6 @@ def parse_folder(path:str, parsed_dir:str, vector_dir:str, doc_map:dict):
 
     for file in os.listdir(path):
         print('Parsing File:',file)
-        doc_uuid = uuid.uuid4().hex
-        new_file = doc_uuid + '.' + file.split('.')[-1]
 
         chunk_ids = parse_document(path+file,vector_dir)
 
@@ -68,9 +72,9 @@ def parse_folder(path:str, parsed_dir:str, vector_dir:str, doc_map:dict):
         for i, chunk_id in enumerate(chunk_ids):
             doc_map[embed_index+i]={
                             'chunk':chunk_id,
-                            'doc':doc_uuid}
+                            'doc':file}
 
-        os.replace(path+file,parsed_dir+new_file)
+        os.replace(path+file,parsed_dir+file)
 
 
 if __name__=='__main__':
