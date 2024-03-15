@@ -49,7 +49,7 @@ def parse_document(path:str, vector_dir:str):
 
             chunk_id = uuid.uuid4().hex
             chunk_ids.append(chunk_id)
-            
+
             # save chunk text
             with open(f'./data/04_text/{chunk_id}.txt','w') as txt_file:
                 txt_file.write(c)
@@ -70,9 +70,7 @@ def parse_folder(path:str, parsed_dir:str, vector_dir:str, doc_map:dict):
 
         embed_index = len(doc_map)
         for i, chunk_id in enumerate(chunk_ids):
-            doc_map[embed_index+i]={
-                            'chunk':chunk_id,
-                            'doc':file}
+            doc_map[embed_index+i]={[chunk_id,file]}
 
         os.replace(path+file,parsed_dir+file)
 

@@ -6,6 +6,7 @@ class RetrieverModel(object):
     def __init__(self, embed, index, doc_map) -> None:
         self.embed = embed
         self.index = index
+        self.doc_map = doc_map
 
     def __call__(self, query, k=10):
         query_vect = self.embed(query)
@@ -20,8 +21,12 @@ class _RetrieverModel(dspy.Retrieve):
         self.index = index
         self.doc_map = doc_map
 
-    def get_document(self, doc_id):
-        pass
+    def get_text(self, doc_index):
+        (chunk_id,document_name) = self.doc_map[doc_index]
+        with open(f'./data/04_text/{chunk_id}.txt','r') as txt_file:
+            text = txt_file.read()
+        txt_file.close()
+        return text
 
     def forward(self, query, k=3):
         """Search the faiss index for k or self.k top passages for query.

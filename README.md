@@ -26,4 +26,15 @@ This repository acts as a guideline for RAG implementation. It uses open-source 
 - UX (Non-technical users likely don't want a terminal)
 
 
-Table of chunk index, text id, doc id
+### Current Debug Steps:
+- Parse 3 documents
+    - verify doc_map
+    - verify text
+    - verify processed
+- Create an exact index
+- Retrieve test
+    - write a pointed query
+    - embed query
+    - search
+    - retreive the text and documents most similar to query
+- Now migrate to DSPy
