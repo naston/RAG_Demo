@@ -1,9 +1,5 @@
 # RAG_Demo
-This repository allows you to start up a local hosted instance of Mixstral 7x8B for the purpose of RAG.
-Documents are indexed through Qdrant, allowing for fast retrieval.
-Additionally you are able to chat with this RAG agent through the terminal.
-
-Because this is based off of pdf documents, OCR is used for text and figure extraction.
+This repository acts as a guideline for RAG implementation. It uses open-source embedding and language models hosted on hugging-face, and implements ANN locally.
 
 ## TODO:
 ### Stage 1: The Backbone of RAG
@@ -13,10 +9,32 @@ Because this is based off of pdf documents, OCR is used for text and figure extr
 - Basic Search Test for errors
 
 ### Stage 2: Generating Chat
-- Choose LLM and load it
-- Basic Chat
+- Choose LLM and load it - https://huggingface.co/google/gemma-2b-it
+- LM code
+- Test Basic Chat 
 
 ### Stage 3: Retrieve and Generate
+- Run DSPy for RAG <- You are here!
+- Repurpose code for DSPy (https://github.com/stanfordnlp/dspy/blob/main/dspy/retrieve/faiss_rm.py,https://github.com/stanfordnlp/dspy/blob/649ba32fc04e864b1036edeb8ae6d330cdcc5ac7/dsp/modules/lm.py,https://github.com/stanfordnlp/dspy/blob/649ba32fc04e864b1036edeb8ae6d330cdcc5ac7/dsp/modules/hf.py)
 - process all docs
 - pre-train an index
 - create a front end?
+
+### Final Thoughts:
+- Security (Data Access, Logins, adversarial prompting)
+- Hosting (Multiple Users, non-local)
+- UX (Non-technical users likely don't want a terminal)
+
+
+### Current Debug Steps:
+- Parse 3 documents
+    - verify doc_map
+    - verify text
+    - verify processed
+- Create an exact index
+- Retrieve test
+    - write a pointed query
+    - embed query
+    - search
+    - retreive the text and documents most similar to query
+- Now migrate to DSPy

@@ -1,6 +1,9 @@
+import os
+import json
+import uuid
 import fitz
 import numpy as np
-import os
+from npy_append_array import NpyAppendArray
 
 
 def chunk_pdf(filename:str):
@@ -37,27 +40,50 @@ def dummy_embed_chunk(text:str):
     return np.array([0,0,0,0])
 
 
-def parse_document(path:str, vector_dir:str):
+def parse_document(path:str, vector_dir:str, embed_model):
     chunks = chunk_pdf(path)
-    with open(vector_dir+'vector_store.npy', 'wb') as f:
+    chunk_ids = []
+    with NpyAppendArray(vector_dir+'vector_store.npy') as f:
+    #with open(vector_dir+'vector_store.npy', 'wb') as f:
         for c in chunks:
-            embed = dummy_embed_chunk(c)
-            np.save(f, embed)
+            embed = embed_model(c)
+            f.append(embed)
+
+            chunk_id = uuid.uuid4().hex
+            chunk_ids.append(chunk_id)
+
+            # save chunk text
+            with open(f'./data/04_text/{chunk_id}.txt','w', encoding="utf-8") as txt_file:
+                txt_file.write(c)
+            txt_file.close()
     f.close()
+    return chunk_ids
 
 
-def parse_folder(path:str, parsed_dir:str, vector_dir:str):
+def parse_folder(path:str, parsed_dir:str, vector_dir:str, doc_map:dict, embed_model):
     if path[-1]!='/': path.append('/')
     if parsed_dir[-1]!='/': parsed_dir.append('/')
     if vector_dir[-1]!='/': vector_dir.append('/')
 
     for file in os.listdir(path):
         print('Parsing File:',file)
-        parse_document(path+file,vector_dir)
-    os.replace(path+file,parsed_dir+file)
 
+        chunk_ids = parse_document(path+file,vector_dir,embed_model)
+
+        embed_index = len(doc_map)
+        for i, chunk_id in enumerate(chunk_ids):
+            doc_map[embed_index+i]=[chunk_id,file]
+
+        os.replace(path+file,parsed_dir+file)
+    return doc_map
 
 
 if __name__=='__main__':
-    #parse_folder('./data/01_raw/','./data/02_processed/','./data/03_vectors/')
-    parse_folder('./data/00_test/','./data/02_processed/','./data/03_vectors/')
+    # './data/01_raw/'
+    with open('./data/doc_map.json','r+') as f:
+        doc_map = json.load(f)
+        doc_map = parse_folder('./data/00_test/','./data/02_processed/','./data/03_vectors/', doc_map)
+
+        f.seek(0)
+        json.dump(doc_map, f)
+    f.close()
