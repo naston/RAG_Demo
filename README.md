@@ -14,10 +14,11 @@ This repository acts as a guideline for RAG implementation. It uses open-source 
 - Test Basic Chat 
 
 ### Stage 3: Retrieve and Generate
-- Run DSPy for RAG <- You are here!
-- Repurpose code for DSPy (https://github.com/stanfordnlp/dspy/blob/main/dspy/retrieve/faiss_rm.py,https://github.com/stanfordnlp/dspy/blob/649ba32fc04e864b1036edeb8ae6d330cdcc5ac7/dsp/modules/lm.py,https://github.com/stanfordnlp/dspy/blob/649ba32fc04e864b1036edeb8ae6d330cdcc5ac7/dsp/modules/hf.py)
+- Run DSPy for RAG 
+- Repurpose code for DSPy <- You are here!
 - process all docs
 - pre-train an index
+- create non-dspy version of code
 - create a front end?
 
 ### Final Thoughts:
@@ -37,4 +38,4 @@ This repository acts as a guideline for RAG implementation. It uses open-source 
     - embed query
     - search
     - retreive the text and documents most similar to query
-- Now migrate to DSPy
+- Now migrate to DSPy <- You are here!
