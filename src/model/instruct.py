@@ -13,10 +13,10 @@ class LanguageModel(object):
     
     def __call__(self, text:str):
         tokens = self.tokenizer(text, return_tensors="pt").to(self.device)
-        outputs = self.model.generate(**tokens,max_new_tokens=256)
+        outputs = self.model.generate(**tokens,max_new_tokens=1028)
 
         input_length = tokens.input_ids.shape[1]
-        outputs = outputs[:, input_length:-5]
+        outputs = outputs[:, input_length:-1]
 
         return self.tokenizer.decode(outputs[0])
     

@@ -3,8 +3,11 @@ from preprocess.search import VectorIndex
 from model.instruct import LanguageModel
 from model.retreive import RetrieverModel
 from preprocess.parse import parse_folder
+import transformers
 import json
 import numpy as np
+
+transformers.logging.set_verbosity_error()
 
 
 def parse_test(embed):
@@ -39,9 +42,6 @@ if __name__=='__main__':
     f.close()
     LM = LanguageModel("google/gemma-2b-it", access_token=access_token)
 
-    #test_query  = 'What is your name?'
-    print(LM(query))
-
     embed = EmbedModel('hkunlp/instructor-large')
 
     # Init data
@@ -55,11 +55,16 @@ if __name__=='__main__':
     # retreive context
     context = RM(query,k=3)
 
+
+    #test_query  = 'What is your name?'
+    print()
+    print(LM(query))
+    print()
+
     # Generate Response
     prompt = "[Query]\n"+query +'\n[Context]\n'
     for c in context:
         prompt += c['long_text'] +'\n'
 
-    print('Final Prompt')
     response = LM(prompt)
     print(response)
