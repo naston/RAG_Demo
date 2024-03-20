@@ -25,6 +25,7 @@ This repository acts as a guideline for RAG implementation. It uses open-source 
 - Security (Data Access, Logins, adversarial prompting)
 - Hosting (Multiple Users, non-local)
 - UX (Non-technical users likely don't want a terminal)
+- Conversational memory? (RAG on previous chats)
 
 
 ### Current Debug Steps:

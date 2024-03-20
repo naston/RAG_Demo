@@ -76,6 +76,9 @@ if __name__=='__main__':
 
     LM = LanguageModel("google/gemma-2b-it",access_token=access_token)
 
-    input_text = "What team does Lionel Messi play for?"
+    #input_text = "What team does Lionel Messi play for?"
+    input_text = "What is your name?"
+    print(input_text)
+    print()
     response = LM(input_text)
     print(response)
