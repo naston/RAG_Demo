@@ -21,16 +21,17 @@ class LanguageModel(object):
         return self.tokenizer.decode(outputs[0])
     
 
-class _LanguageModel(LM):
+class DSPyLanguageModel(LM):
     def __init__(self, model_name, access_token=None) -> None:
-        super().__init__()
+        super().__init__(model_name)
+        self.device = "cuda:0" if torch.cuda.is_available() else "cpu"
         self.tokenizer = AutoTokenizer.from_pretrained(model_name, token=access_token)
-        self.model = AutoModelForCausalLM.from_pretrained(model_name, token=access_token)
+        self.model = AutoModelForCausalLM.from_pretrained(model_name, token=access_token).to(self.device)
 
     def basic_request(self, prompt, **kwargs):
         raw_kwargs = kwargs
         kwargs = {**self.kwargs, **kwargs}
-        response = self._generate(prompt, **kwargs)
+        response = self._generate(prompt)
 
         history = {
             "prompt": prompt,
@@ -44,7 +45,7 @@ class _LanguageModel(LM):
 
     def _generate(self, prompt):
         inputs = self.tokenizer(prompt, return_tensors="pt").to(self.device)
-        outputs = self.model.generate(**inputs,max_new_tokens=256)
+        outputs = self.model.generate(**inputs,max_new_tokens=1028)
         
         input_length = inputs.input_ids.shape[1]
         outputs = outputs[:, input_length:]

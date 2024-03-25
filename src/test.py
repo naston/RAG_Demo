@@ -26,14 +26,8 @@ def create_index(xb):
     index.add_vectors(xb)
     return index
 
-def retrieve(RM):
-    pass
 
-def generate(LM):
-    pass
-
-
-if __name__=='__main__':
+def generic_test():
     query = 'What does the acronym S4 stand for and why is this model important?'
 
     # Load LM
@@ -56,6 +50,9 @@ if __name__=='__main__':
     context = RM(query,k=3)
 
 
+    print(context)
+
+
     #test_query  = 'What is your name?'
     print()
     print(LM(query))
@@ -68,3 +65,7 @@ if __name__=='__main__':
 
     response = LM(prompt)
     print(response)
+
+
+if __name__=='__main__':
+    generic_test()

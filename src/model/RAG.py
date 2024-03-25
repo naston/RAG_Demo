@@ -1,12 +1,12 @@
 import dspy
-from instruct import LanguageModel
 
 
 class RAG(dspy.Module):
-    def __init__(self, num_passages=10):
+    def __init__(self, num_passages=3):
         super().__init__()
         
-        #self.retrieve = dspy.Retrieve(k=num_passages)
+        self.num_passages = num_passages
+        self.retrieve = dspy.Retrieve(k=num_passages)
         self.generate_answer = dspy.ChainOfThought("context, question -> answer")
     
     def forward(self, question):
@@ -14,11 +14,10 @@ class RAG(dspy.Module):
         answer = self.generate_answer(context=context, question=question)
         return answer
     
-    def retrieve(question:str):
+    def _retrieve(self, question:str):
         # Use embeddor to embed
-        pass
+        return self.rm(question, k=self.num_passages)
 
 
 if __name__=='__main__':
-    LM = LanguageModel("google/gemma-2b-it")
-    dspy.settings.configure(lm=LM)
+    pass

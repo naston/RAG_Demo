@@ -16,7 +16,7 @@ class RetrieverModel(object):
         return text
     
     def get_docname(self, doc_index):
-        (chunk_id,document_name) = self.doc_map[doc_index]
+        (chunk_id,document_name) = self.doc_map[str(doc_index)]
         return document_name
 
     def __call__(self, query, k=10):
@@ -38,15 +38,19 @@ class RetrieverModel(object):
         context = None
         return context
     
-class _RetrieverModel(dspy.Retrieve):
+class DSPyRetrieverModel(dspy.Retrieve):
     def __init__(self, embed, index, doc_map):
         self.embed = embed
         self.index = index
         self.doc_map = doc_map
 
+    def get_docname(self, doc_index):
+        (chunk_id,document_name) = self.doc_map[str(doc_index)]
+        return document_name
+
     def get_text(self, doc_index):
-        (chunk_id,document_name) = self.doc_map[doc_index]
-        with open(f'./data/04_text/{chunk_id}.txt','r') as txt_file:
+        (chunk_id,document_name) = self.doc_map[str(doc_index)]
+        with open(f'./data/04_text/{chunk_id}.txt','r', encoding="utf8") as txt_file:
             text = txt_file.read()
         txt_file.close()
         return text

@@ -15,10 +15,11 @@ This repository acts as a guideline for RAG implementation. It uses open-source 
 
 ### Stage 3: Retrieve and Generate
 - Run DSPy for RAG 
-- Repurpose code for DSPy <- You are here!
-- process all docs
+- Repurpose code for DSPy 
+- process all docs <- You are here!
 - pre-train an index
-- create non-dspy version of code
+- create non-dspy version of code (pretty much done already)
+- create fine-tuning set
 - create a front end?
 
 ### Final Thoughts:
@@ -26,6 +27,8 @@ This repository acts as a guideline for RAG implementation. It uses open-source 
 - Hosting (Multiple Users, non-local)
 - UX (Non-technical users likely don't want a terminal)
 - Conversational memory? (RAG on previous chats)
+- Agent swarm?
+- Meta-Prompting
 
 
 ### Current Debug Steps:
