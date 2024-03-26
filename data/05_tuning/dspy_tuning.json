@@ -1,0 +1,62 @@
+[
+    {
+        "question":"What does S4 stand for and why is it important?",
+        "answer":"S4 stands for 'Selective State Space Models' and provides a paramaterization for SSMs in a neural network. S4 is can be calculated as an RNN and a Convolution, allowing for both parallel and recurrent processing."
+    },
+    {
+        "question":"What is the importance of Chain of Thought prompting?",
+        "answer":"Chain of Thougth (CoT) prompting embues an LLM with the capability to step through a natural language problem with reasoning."
+    },
+    {
+        "question":"What is the predecessor of Direct Preference Optimization?",
+        "answer":"Direct Preference Optimization is a reformulation of Reinforcement Learning from Human Feedback (RLHF)."
+    },
+    {
+        "question":"What is different about the Expert Choice router?",
+        "answer":"The Expert Choice router creates a new router for each expert rather than having one router shared by all experts."
+    },
+    {
+        "question":"What methods have been used to train a Multi-modal emotion recognition model for missing/OOD data.",
+        "answer":"Methods such as knowledge distillation and masked training."
+    },
+    {
+        "question":"What task is Mamba applied to?",
+        "answer":"Mamba is a general sequence model applied to language modelling."
+    },
+    {
+        "question":"What is the value of BitNet?",
+        "answer":"BitNet is a heavily quantized LLM with high energy efficiency and low latency."
+    },
+    {
+        "question":"What language model inspired Mixtral?",
+        "answer":"Mixtral combines the Mistral 7B model with a Mixture of Experts model."
+    },
+    {
+        "question":"How is MambaByte different from other ",
+        "answer":"MambaByte does not use a tokenizer, instead performing language modeling on bytes."
+    },
+    {
+        "question":"What network is U-Mamba similar to?",
+        "answer":"U-Mamba is similar to U-Net, a ConvNet architecture for image segmentation."
+    },
+    {
+        "question":"What dataset is used to evaluate VALL-E?",
+        "answer":"LibriSpeech and VCTK are used to evaluate VALL-E."
+    },
+    {
+        "question":"What is VALL-E used for?",
+        "answer":"VALL-E is a 0-shot text-to-speech model."
+    },
+    {
+        "question":"What is an example of an LLM Router?",
+        "answer":"Leeroo is an example of an LLM Router."
+    },
+    {
+        "question":"Why would you want to use an LLM Router?",
+        "answer":"Not all LLM prompts are complex, meaning a simpler cost-effective LLM can be used with negligible performance loss."
+    },
+    {
+        "question":"What is Meta-Prompting?",
+        "answer":"Meta-Prompting allows an LLM to break up a task into subtasks which it assigns to other expert LLMs. These expert LLMs are copies of the parent LLM."
+    }
+]

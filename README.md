@@ -12,14 +12,16 @@ This repository acts as a guideline for RAG implementation. It uses open-source 
 - Choose LLM and load it - https://huggingface.co/google/gemma-2b-it
 - LM code
 - Test Basic Chat 
+- create non-dspy RAG
 
 ### Stage 3: Retrieve and Generate
-- Run DSPy for RAG 
 - Repurpose code for DSPy 
+- Run DSPy for RAG 
+- create fine-tuning set and use teleprompters
 - process all docs <- You are here!
 - pre-train an index
-- create non-dspy version of code (pretty much done already)
-- create fine-tuning set
+
+### Stage 4: Interactivity
 - create a front end?
 
 ### Final Thoughts:
