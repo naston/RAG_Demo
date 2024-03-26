@@ -17,7 +17,7 @@ This repository acts as a guideline for RAG implementation. It uses open-source 
 ### Stage 3: Retrieve and Generate
 - Repurpose code for DSPy 
 - Run DSPy for RAG 
-- create fine-tuning set and use teleprompters
+- create fine-tuning set and use teleprompters (need to test this)
 - process all docs <- You are here!
 - pre-train an index
 
