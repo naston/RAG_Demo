@@ -17,12 +17,13 @@ This repository acts as a guideline for RAG implementation. It uses open-source 
 ### Stage 3: Retrieve and Generate
 - Repurpose code for DSPy 
 - Run DSPy for RAG 
-- create fine-tuning set and use teleprompters (need to test this)
-- process all docs <- You are here!
+- create fine-tuning set
+- process all docs 
 - pre-train an index
+- use teleprompters <- You are here!
 
 ### Stage 4: Interactivity
-- create a front end?
+- create a front end (basically done)
 
 ### Final Thoughts:
 - Security (Data Access, Logins, adversarial prompting)
@@ -31,6 +32,7 @@ This repository acts as a guideline for RAG implementation. It uses open-source 
 - Conversational memory? (RAG on previous chats)
 - Agent swarm?
 - Meta-Prompting
+- front-end
 
 
 ### Current Debug Steps:

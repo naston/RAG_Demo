@@ -49,9 +49,7 @@ def generic_test():
     # retreive context
     context = RM(query,k=3)
 
-
     print(context)
-
 
     #test_query  = 'What is your name?'
     print()
